@@ -1,0 +1,77 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.194.0/containers/ruby
+{
+	"name": "Ruby",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.2",
+	"remoteEnv": {
+		"BUNDLE_AUTO_INSTALL": "true"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+      // Do not change dockerDashComposeVersion value as this could follow performance degradation for
+      // local dev environment because with the compose v2 db container won't use `tmpfs` for script/cibuild
+			// "dockerDashComposeVersion": "v2",
+			// disables azure dns overrides for the Docker daemon
+			// https://github.com/github/codespaces-vpn/blob/a15a81aeea0d24f99a728a777cb6f37ecd1e7961/README.md#2-turn-off-azurednsautodetection-in-the-docker-in-docker-feature
+			"azureDnsAutoDetection": false,
+			// avoid overlapping ip routes with the Docker daemon
+			// https://github.com/github/codespaces-vpn/blob/a15a81aeea0d24f99a728a777cb6f37ecd1e7961/README.md#vpn-wont-connect
+			"dockerDefaultAddressPool": "base=192.168.0.0/16,size=24"
+		},
+		"ghcr.io/devcontainers/features/sshd:1": "latest",
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/github/features/dev-vpn:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"shopify.ruby-extensions-pack",
+				"ms-azuretools.vscode-docker",
+				"gripdev.vscode-ruby-test-adapter-parallel-rspec",
+				"formulahendry.vscode-mysql",
+				"ethan-reesor.vscode-byebug",
+				"ms-vscode-remote.remote-containers",
+				"ms-vscode.test-adapter-converter",
+				"mutantdino.resourcemonitor",
+				"itarato.byesig",
+				"eamodio.gitlens",
+				"GitHub.vscode-github-actions",
+				"redhat.vscode-yaml",
+				"tatosjb.rspec-quick-spec",
+				"Lourenci.go-to-spec",
+				"rubocop.vscode-rubocop",
+				"rebornix.ruby@0.28.1" // We need this legacy extension to be able to debug tests in the test explorer
+			]
+		},
+		"settings": {
+			"sorbet.enabled": true,
+			"sorbet.lspConfigs": [
+				{
+					"id": "stable",
+					"name": "Sorbet",
+					"description": "Stable Sorbet Ruby IDE features",
+					"cwd": "${workspaceFolder}",
+					"command": ["bundle", "exec", "srb", "typecheck", "--lsp"]
+				}
+			],
+			"sqltools.connections": [
+				{
+					"mysqlOptions": {
+						"authProtocol": "default"
+					},
+					"previewLimit": 50,
+					"server": "127.0.0.1",
+					"port": 3306,
+					"driver": "MySQL",
+					"name": "localhost",
+					"database": "dev_database",
+					"username": "root",
+					"password": ""
+				}
+			]
+		}
+	},
+	"remoteUser": "vscode",
+	"containerUser": "vscode",
+	"forwardPorts": [9393],
+}
