@@ -7,20 +7,7 @@
 		"BUNDLE_AUTO_INSTALL": "true"
 	},
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
-      // Do not change dockerDashComposeVersion value as this could follow performance degradation for
-      // local dev environment because with the compose v2 db container won't use `tmpfs` for script/cibuild
-			// "dockerDashComposeVersion": "v2",
-			// disables azure dns overrides for the Docker daemon
-			// https://github.com/github/codespaces-vpn/blob/a15a81aeea0d24f99a728a777cb6f37ecd1e7961/README.md#2-turn-off-azurednsautodetection-in-the-docker-in-docker-feature
-			"azureDnsAutoDetection": false,
-			// avoid overlapping ip routes with the Docker daemon
-			// https://github.com/github/codespaces-vpn/blob/a15a81aeea0d24f99a728a777cb6f37ecd1e7961/README.md#vpn-wont-connect
-			"dockerDefaultAddressPool": "base=192.168.0.0/16,size=24"
-		},
 		"ghcr.io/devcontainers/features/sshd:1": "latest",
-		"ghcr.io/devcontainers/features/github-cli:1": {},
-		"ghcr.io/github/features/dev-vpn:1": {}
 	},
 	"customizations": {
 		"vscode": {
